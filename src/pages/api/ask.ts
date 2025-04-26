@@ -6,7 +6,7 @@
 
 import { NextApiResponse, NextApiRequest } from "next";
 import { PrismaClient } from "@prisma/client";
-import OpenAI from "openai"; 
+import OpenAI from "openai";
 
 const prisma = new PrismaClient();
 
@@ -35,7 +35,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 { role: "system", content: "You are a helpful assistant. Your answers must be clear and have a maximum of 500 characters." },
                 { role: "system", content: "You are a helpful assistant. Your answers must be clear and have a maximum of 500 characters." },
                 { role: "user", content: question }],
-            
+
 
         });
 
@@ -50,10 +50,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
 
         return res.status(200).json({ answer });
-
-    } catch (error: any) {
-        console.error(error.message);
-        return res.status(500).json({ error: "Internal Server Error" })
+    } catch (error) {
+        if (error instanceof Error) {
+            console.error(error.message);
+            return res.status(500).json({ error: "Internal Server Error" });
+        }
+        console.error("Unknown error", error);
+        return res.status(500).json({ error: "Internal Server Error" });
     }
+
 
 }
