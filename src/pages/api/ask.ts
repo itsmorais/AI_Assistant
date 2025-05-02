@@ -33,7 +33,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             model: "gpt-3.5-turbo",
             messages: [
                 { role: "system", content: "You are a helpful assistant. Your answers must be clear and have a maximum of 500 characters." },
-                { role: "system", content: "You are a helpful assistant. Your answers must be clear and have a maximum of 500 characters." },
                 { role: "user", content: question }],
 
 
